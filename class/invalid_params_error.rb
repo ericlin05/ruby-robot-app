@@ -5,8 +5,8 @@
 # level errors, while if you inherit Exception directly you risk catching errors to do 
 # with the environment. Also the convention is to end your exceptions with the word 
 # Error rather than Exceptions
-class RobotNotReadyError < StandardError
+class InvalidParamsError < StandardError
     def message
-        "Robot is not able to do any movement or direction change if it is not placed on a table top yet!"
+        "Invalid parameters!"
     end
 end

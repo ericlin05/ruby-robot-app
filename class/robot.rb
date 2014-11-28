@@ -1,5 +1,5 @@
 require 'class/tabletop'
-require 'class/robot_not_ready_error'
+require 'class/not_ready_error'
 
 class Robot
     # the list of valid directions that the robot can face
@@ -22,6 +22,11 @@ class Robot
 
     # When placing Robot, we need to know which table top we want to place on,
     # which direction it should be facing and the starting position on the table
+    #
+    # table_top - The TableTop object
+    # direction - The direction the robot will be facing, possible values are :NORTH, :SOUTH, :WEST and :EAST
+    # x         - The X coordinate of the initial position
+    # y         - The Y coordinate of the initial position
     def place(table_top, direction=:NORTH, x=0, y=0)
         @table_top = table_top
         @direction = VALID_DIRECTIONS[direction].nil? ? :NORTH : direction
@@ -42,32 +47,59 @@ class Robot
         _ensure_placed
 
         case @direction
-        when :NORTH
-            @y += 1 if @y < @table_top.height
-        when :SOUTH
-            @y -= 1 if @y > 0
-        when :EAST
-            @x += 1 if @x < @table_top.width
-        when :WEST
-            @x -= 1 if @x > 0
+            when :NORTH
+                @y += 1 if @y < @table_top.height
+            when :SOUTH
+                @y -= 1 if @y > 0
+            when :EAST
+                @x += 1 if @x < @table_top.width
+            when :WEST
+                @x -= 1 if @x > 0
         end
     end
 
     def left
+        _ensure_placed
 
+        case @direction
+            when :NORTH
+                @direction = :WEST
+            when :SOUTH
+                @direction = :EAST
+            when :EAST
+                @direction = :NORTH
+            when :WEST
+                @direction = :SOUTH
+        end
     end
 
     def right
+        _ensure_placed
 
+        case @direction
+            when :NORTH
+                @direction = :EAST
+            when :SOUTH
+                @direction = :WEST
+            when :EAST
+                @direction = :SOUTH
+            when :WEST
+                @direction = :NORTH
+        end
     end
 
     def report
-
+        _ensure_placed
+        
+        "#{@x},#{@y},#{direction}"
     end
 
-    private
+    # If the robot is not placed, it will not be able to do any actions
+    # we will simply raise an error when this happens
     def _ensure_placed
-        raise NotPLacedError unless @placed
+        raise NotReadyError unless @placed
     end
 
+    # the private class name will start with "_" for convension
+    private :_ensure_placed
 end

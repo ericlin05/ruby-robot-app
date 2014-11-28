@@ -1,5 +1,6 @@
 require 'test/unit'
 require 'class/robot'
+require 'class/not_ready_error'
 
 class RobotTest < Test::Unit::TestCase
     def setup
@@ -170,14 +171,71 @@ class RobotTest < Test::Unit::TestCase
     end
 
     def test_left
+        # the expected result aftering turning left
+        expected = {
+            :NORTH => :WEST,
+            :SOUTH => :EAST,
+            :EAST  => :NORTH,
+            :WEST  => :SOUTH
+        }
+        table_top = TableTop.new(5, 5)
 
+        expected.each do |current_facing, after_facing|
+            @robot.place(table_top, current_facing, 0, 4)
+            @robot.left
+            assert_equal(after_facing, @robot.direction)
+        end
     end
 
     def test_right
+        # the expected result aftering turning right
+        expected = {
+            :NORTH => :EAST,
+            :SOUTH => :WEST,
+            :EAST  => :SOUTH,
+            :WEST  => :NORTH
+        }
+        table_top = TableTop.new(5, 5)
 
+        expected.each do |current_facing, after_facing|
+            @robot.place(table_top, current_facing, 0, 4)
+            @robot.right
+            assert_equal(after_facing, @robot.direction)
+        end
     end
 
     def test_report
+        table_top = TableTop.new(5, 5)
+        @robot.place(table_top, :NORTH, 0, 4)
+        assert_equal("0,4,NORTH", @robot.report, "Initial position should be at 0,4 and facing NORTH")
 
+        @robot.left
+        assert_equal("0,4,WEST", @robot.report, "Turned left from NORTH, now should be facing WEST, and at the same location")
+
+        # unable to move to west because we are on the edge
+        # so nothing will happen
+        @robot.move
+        assert_equal("0,4,WEST", @robot.report, "Should not be able to move, remain at the same location")
+
+        @robot.left
+        assert_equal("0,4,SOUTH", @robot.report, "Turned left from WEST, now should be facing SOUTH")
+
+        @robot.move
+        assert_equal("0,3,SOUTH", @robot.report, "Moved from 4 to 3 in SOUTH direction")
+
+        @robot.left
+        assert_equal("0,3,EAST", @robot.report, "Turned left from SOUTH, now should be facing EAST")
+
+        @robot.move
+        assert_equal("1,3,EAST", @robot.report, "Moved from [0,3] to [1,3], and still facing EAST")
+    end
+
+    # this test that we should get the NotReadyError if we try to do
+    # any actions before robot is placed
+    def test_not_ready_error_before_place
+        assert_raise(NotReadyError) { @robot.move }
+        assert_raise(NotReadyError) { @robot.left }
+        assert_raise(NotReadyError) { @robot.right }
+        assert_raise(NotReadyError) { @robot.report }
     end
 end
