@@ -10,15 +10,15 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: ruby -I . app.rb [options]"
 
-  opts.on("-t", "--type [type_name]", "Report Type: simple or fancy") do |v|
-    options[:type] = v.to_sym
+  opts.on("-r", "--report [Report Type]", "Report Type: simple or fancy") do |v|
+    options[:report_type] = v.to_sym
   end
 end.parse!
 
 # initialise tabletop and robot
 tabletop = TableTop.new(5,5)
 robot = Robot.new("R2-D2")
-report = ReportFactory.getReport(robot, tabletop, options[:type])
+report = ReportFactory.getReport(robot, tabletop, options[:report_type])
 
 c = gets
 # when piping data from a text file, will get a NIL error 

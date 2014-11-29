@@ -12,6 +12,7 @@ class RobotTest < Test::Unit::TestCase
             table_top = TableTop.new(5, 5)
             @robot.place(table_top, dir)
             assert_equal(dir, @robot.direction)
+            assert_equal("P", @robot.get_path_value(0, 0))
         end
     end
 
@@ -20,6 +21,7 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :TEST)
 
         assert_equal(:NORTH, @robot.direction)
+        assert_equal("P", @robot.get_path_value(0, 0))
     end
 
     def test_place_default_x_y_direction
@@ -29,6 +31,7 @@ class RobotTest < Test::Unit::TestCase
         assert_equal(:NORTH, @robot.direction)
         assert_equal(0, @robot.x, "X position should be default to 0")
         assert_equal(0, @robot.y, "Y position should be default to 0")
+        assert_equal("P", @robot.get_path_value(0, 0))
     end
 
     def test_place_passed_x_y_direction
@@ -38,6 +41,7 @@ class RobotTest < Test::Unit::TestCase
         assert_equal(:SOUTH, @robot.direction)
         assert_equal(3, @robot.x, "X position should be equal to 3")
         assert_equal(8, @robot.y, "Y position should be equal to 8")
+        assert_equal("P", @robot.get_path_value(3, 8))
     end
 
     def test_place_passed_x_out_of_bound
@@ -47,6 +51,7 @@ class RobotTest < Test::Unit::TestCase
         assert_equal(:EAST, @robot.direction)
         assert_equal(0, @robot.x, "X position should be default to 0 because passed x value of 30 is out of boundary of the table")
         assert_equal(0, @robot.y, "Y position should be default to 0 because passed x value of 30 is out of boundary of the table")
+        assert_equal("P", @robot.get_path_value(0, 0))
     end
 
     def test_place_passed_y_out_of_bound
@@ -56,6 +61,7 @@ class RobotTest < Test::Unit::TestCase
         assert_equal(:EAST, @robot.direction)
         assert_equal(0, @robot.x, "X position should be default to 0 because passed y value of 21 is out of boundary of the table")
         assert_equal(0, @robot.y, "Y position should be default to 0 because passed y value of 21 is out of boundary of the table")
+        assert_equal("P", @robot.get_path_value(0, 0))
     end
 
     # Robot is place at position [0,0] and facing NORTH
@@ -65,11 +71,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :TEST)
 
         assert_equal(:NORTH, @robot.direction)
+        assert_equal("P", @robot.get_path_value(0, 0))
 
         @robot.move
         assert_equal(0, @robot.x, "X position should be 0 (not changed)")
         assert_equal(1, @robot.y, "Y position should be 1 (moved 1 north)")
         assert_equal(:NORTH, @robot.direction, "Direction should be :NORTH (not changed)")
+        assert_equal("M", @robot.get_path_value(0, 1))
     end
 
     # Robot is place at position [1,5] and facing NORTH
@@ -79,11 +87,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :TEST, 1, 5)
 
         assert_equal(:NORTH, @robot.direction)
+        assert_equal("P", @robot.get_path_value(1, 5))
 
         @robot.move
         assert_equal(1, @robot.x, "X position should be 1 (not changed)")
         assert_equal(5, @robot.y, "Y position should be 5 (not changed)")
         assert_equal(:NORTH, @robot.direction, "Direction should be :NORTH (not changed)")
+        assert_equal("P", @robot.get_path_value(1, 5))
     end
 
     # Robot is place at position [1,2] and facing SOUTH
@@ -93,11 +103,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :SOUTH, 1, 2)
 
         assert_equal(:SOUTH, @robot.direction)
+        assert_equal("P", @robot.get_path_value(1, 2))
 
         @robot.move
         assert_equal(1, @robot.x, "X position should be 1 (not changed)")
         assert_equal(1, @robot.y, "Y position should be 1 (moved 1 south)")
         assert_equal(:SOUTH, @robot.direction, "Direction should be :SOUTH (not changed)")
+        assert_equal("M", @robot.get_path_value(1, 1))
     end
 
     # Robot is place at position [1,0] and facing SOUTH
@@ -107,11 +119,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :SOUTH, 1, 0)
 
         assert_equal(:SOUTH, @robot.direction)
+        assert_equal("P", @robot.get_path_value(1, 0))
 
         @robot.move
         assert_equal(1, @robot.x, "X position should be 1 (not changed)")
         assert_equal(0, @robot.y, "Y position should be 0 (not changed)")
         assert_equal(:SOUTH, @robot.direction, "Direction should be :SOUTH (not changed)")
+        assert_equal("P", @robot.get_path_value(1, 0))
     end
 
     # Robot is place at position [1,2] and facing EAST
@@ -121,11 +135,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :EAST, 1, 2)
 
         assert_equal(:EAST, @robot.direction)
+        assert_equal("P", @robot.get_path_value(1, 2))
 
         @robot.move
         assert_equal(2, @robot.x, "X position should be 2 (moved 1 east)")
         assert_equal(2, @robot.y, "Y position should be 2 (not changed)")
         assert_equal(:EAST, @robot.direction, "Direction should be :EAST (not changed)")
+        assert_equal("M", @robot.get_path_value(2, 2))
     end
 
     # Robot is place at position [5,2] and facing EAST
@@ -135,11 +151,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :EAST, 5, 2)
 
         assert_equal(:EAST, @robot.direction)
+        assert_equal("P", @robot.get_path_value(5, 2))
 
         @robot.move
         assert_equal(5, @robot.x, "X position should be 5 (not changed)")
         assert_equal(2, @robot.y, "Y position should be 2 (not changed)")
         assert_equal(:EAST, @robot.direction, "Direction should be :EAST (not changed)")
+        assert_equal("P", @robot.get_path_value(5, 2))
     end
 
     # Robot is place at position [5,5] and facing WEST
@@ -149,11 +167,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :WEST, 5, 5)
 
         assert_equal(:WEST, @robot.direction)
+        assert_equal("P", @robot.get_path_value(5, 5))
 
         @robot.move
         assert_equal(4, @robot.x, "X position should be 4 (moved 1 east)")
         assert_equal(5, @robot.y, "Y position should be 5 (not changed)")
         assert_equal(:WEST, @robot.direction, "Direction should be :WEST (not changed)")
+        assert_equal("M", @robot.get_path_value(4, 5))
     end
 
     # Robot is place at position [0,4] and facing WEST
@@ -163,11 +183,13 @@ class RobotTest < Test::Unit::TestCase
         @robot.place(table_top, :WEST, 0, 4)
 
         assert_equal(:WEST, @robot.direction)
+        assert_equal("P", @robot.get_path_value(0, 4))
 
         @robot.move
         assert_equal(0, @robot.x, "X position should be 0 (not changed)")
         assert_equal(4, @robot.y, "Y position should be 4 (not changed)")
         assert_equal(:WEST, @robot.direction, "Direction should be :WEST (not changed)")
+        assert_equal("P", @robot.get_path_value(0, 4))
     end
 
     def test_left

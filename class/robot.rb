@@ -12,12 +12,13 @@ class Robot
     }
 
     # make those attributes read only from outside world
-    attr_reader :table_top, :direction, :x, :y, :placed
+    attr_reader :table_top, :direction, :x, :y, :placed, :path
 
     # it would be too boring if the robot does not have a name, 
     # let's give it a name when creating a robot
     def initialize(name)
         @name = name
+        @path = {}
     end
 
     # When placing Robot, we need to know which table top we want to place on,
@@ -36,6 +37,9 @@ class Robot
         @x = valid_location ? x : 0
         @y = valid_location ? y : 0
 
+        # it is a place at this coordinate
+        @path[_path_key] = 'P'
+
         # mark that this robot has been placed
         @placed = true
     end
@@ -48,13 +52,25 @@ class Robot
 
         case @direction
             when :NORTH
-                @y += 1 if @y < @table_top.height
+                if @y < @table_top.height - 1
+                    @y += 1
+                    @path[_path_key] = 'M'
+                end
             when :SOUTH
-                @y -= 1 if @y > 0
+                if @y > 0
+                    @y -= 1
+                    @path[_path_key] = 'M'
+                end
             when :EAST
-                @x += 1 if @x < @table_top.width
+                if @x < @table_top.width - 1
+                    @x += 1
+                    @path[_path_key] = 'M'
+                end
             when :WEST
-                @x -= 1 if @x > 0
+                if @x > 0
+                    @x -= 1
+                    @path[_path_key] = 'M'
+                end
         end
     end
 
@@ -88,12 +104,34 @@ class Robot
         end
     end
 
+    # Clear the path history of the robot
+    # This is used so that we can simply pass all test cases in one file
+    # and have the path history specific to a particular test case
+    # by clearing the history at the end of each test case
+    def clear
+        @path = {}
+    end
+
+    # I provide this public function purely for unit testing purpose
+    # so that I can make sure the path is added to the @path variable
+    #
+    # x - The x position on the tabletop
+    # y - The y position on the tabletop
+    def get_path_value(x, y)
+        @path[x.to_s << "_" << y.to_s]
+    end
+
     # If the robot is not placed, it will not be able to do any actions
     # we will simply raise an error when this happens
     def _ensure_placed
         raise NotReadyError unless @placed
     end
 
+    # The key used to store in @path, which consist of x and y values
+    def _path_key
+        @x.to_s << "_" << @y.to_s
+    end
+
     # the private class name will start with "_" for convension
-    private :_ensure_placed
+    private :_ensure_placed, :_path_key
 end

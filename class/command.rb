@@ -11,7 +11,8 @@ class Command
         :MOVE   => 1,
         :LEFT   => 1,
         :RIGHT  => 1,
-        :REPORT => 1
+        :REPORT => 1,
+        :CLEAR  => 1
     }
 
     # the valid number format for coordinates
