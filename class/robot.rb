@@ -12,7 +12,7 @@ class Robot
     }
 
     # make those attributes read only from outside world
-    attr_reader :table_top, :direction, :x, :y
+    attr_reader :table_top, :direction, :x, :y, :placed
 
     # it would be too boring if the robot does not have a name, 
     # let's give it a name when creating a robot
@@ -86,12 +86,6 @@ class Robot
             when :WEST
                 @direction = :NORTH
         end
-    end
-
-    def report
-        _ensure_placed
-        
-        "#{@x},#{@y},#{direction}"
     end
 
     # If the robot is not placed, it will not be able to do any actions

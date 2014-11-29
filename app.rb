@@ -2,10 +2,23 @@
 require 'class/robot'
 require 'class/tabletop'
 require 'class/command'
+require 'optparse'
+require 'class/report/report_factory'
+
+# Getting command line parameters
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ruby -I . app.rb [options]"
+
+  opts.on("-t", "--type [type_name]", "Report Type: simple or fancy") do |v|
+    options[:type] = v.to_sym
+  end
+end.parse!
 
 # initialise tabletop and robot
 tabletop = TableTop.new(5,5)
 robot = Robot.new("R2-D2")
+report = ReportFactory.getReport(robot, tabletop, options[:type])
 
 c = gets
 # when piping data from a text file, will get a NIL error 
@@ -16,7 +29,7 @@ c.chomp.downcase! unless c.nil?
 
 until c == 'quit' || c == 'exit'
     begin
-        Command.new(c).run(robot, tabletop)
+        Command.new(c).run(robot, tabletop, report)
     rescue NotReadyError => e 
         puts e.message
     rescue InvalidCommandError => e

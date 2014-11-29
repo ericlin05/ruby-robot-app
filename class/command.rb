@@ -53,12 +53,12 @@ class Command
         end
     end
 
-    def run(robot, tabletop)
+    def run(robot, tabletop, report)
         case @command
             when 'place'
                 robot.send(@command, tabletop, @params[2].to_sym, @params[0], @params[1])
             when 'report'
-                puts robot.send(@command)
+                puts report.send("display")
             else
                 robot.send(@command)
         end
