@@ -1,8 +1,9 @@
 
-# This class represents a tabletop that a robot will be exploring on
+# This class represents a tabletop that a robot will be exploring on.
+#
 # I put it in a separate class so that any further logic that we need 
 # to add in the the future, can be added here without affecting the
-# robot class
+# robot class.
 #
 # Possible extensions:
 #   1. Add obstacles on the table 
@@ -16,7 +17,11 @@ class TableTop
 
     # When TableTop is created, we need to know the size of the table
     def initialize(width, height)
-        @width = width
-        @height = height
+        @width  = width.to_i
+        @height = height.to_i
+
+        # use default value if not set properly
+        @width  = DEFAULT_WIDTH if @width == 0
+        @height = DEFAULT_WIDTH if @height == 0
     end
 end

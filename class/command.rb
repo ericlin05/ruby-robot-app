@@ -55,17 +55,26 @@ class Command
             @params = params
         end
 
+        # we are expecting three parameters for "place" command
+        # if nothing is passed, then we need to use default
         if @command == 'place' && @params.length != 3
             @params = [ 0, 0, Robot::DEFAULT_DIRECTION.to_s ]
         end
     end
 
+    # run the command for a given parameters
+    # robot    - Robot object
+    # tabeltop - TableTop object
+    # report   - The AbstractReport object
     def run(robot, tabletop, report)
         case @command
+            # place command requires parameters
             when 'place'
                 robot.send(@command, tabletop, @params[2].to_sym, @params[0], @params[1])
+            # report command simply calls report.display function
             when 'report'
                 puts report.send("display")
+            # all other commands just calls functions inside Robot object
             else
                 robot.send(@command)
         end

@@ -1,5 +1,5 @@
 
-This ruby app was tested under KUbuntu with Ruby version 1.9.3p484 installed.
+This ruby app was tested under Kubuntu with Ruby version 1.9.3p484 installed.
 
 1. Requirement:
 
@@ -27,14 +27,29 @@ a. Run the app from the app's root directory without any options
 
     ruby -I . app.rb
 
-b. You can also pass extra options to customise the app
+   This will start the app using default settings
 
-    ruby -I . app.rb -r fancy -w 20 -h 20
+   i.   uses simply reporting
+   ii.  width is 5 units
+   iii. height is 5 units
 
--r - Report type, currently supports "simple" or "fancy", default to simple if not specified
--w - The width of the table top, default to 5 if not specified
--h - The height of the table top, default to 5 if not specified
+b. Pass "-h" to see parameter options
 
-c. I have also set up some sample test input to test this app, again, from the app's root directory
+    ruby -I . app.rb -h
 
-    cat sample/case* | ruby -I . app.rb -r fancy -w 10 -h 10
+c. Pass extra options to customise the app
+
+    ruby -I . app.rb -r fancy -x 20 -y 20
+
+   -r - Report type, currently supports "simple" or "fancy", default to simple if not specified
+   -x - The width of the table top, default to 5 if not specified
+   -y - The height of the table top, default to 5 if not specified
+
+d. I have also set up some sample test input to test this app based on PROBLEM.md file, 
+   again, from the app's root directory
+
+    cat sample/case* | ruby -I . app.rb -r fancy -x 10 -y 10
+
+4. Quit the application:
+
+    Simply type in "QUIT", "EXIT" commands or Ctrl + D to exit the program

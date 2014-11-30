@@ -1,6 +1,11 @@
 require 'class/tabletop'
 require 'class/not_ready_error'
 
+# This class contains the main logic for a robot to be placed, move
+# and turn left or right
+#
+# It also contains the logic to track the movement of the robot by
+# storing the x and y coordinates on each movement into a hash map
 class Robot
     DEFAULT_DIRECTION = :NORTH
 
@@ -11,6 +16,22 @@ class Robot
         :SOUTH => 1,
         :EAST  => 1,
         :WEST  => 1
+    }
+
+    # simple hash table for turning left
+    MAPPING_TURN_LEFT = {
+        :NORTH => :WEST,
+        :SOUTH => :EAST,
+        :EAST  => :NORTH,
+        :WEST  => :SOUTH
+    }
+
+    # simple hash table for turning right
+    MAPPING_TURN_RIGHT = {
+        :NORTH => :EAST,
+        :SOUTH => :WEST,
+        :EAST  => :SOUTH,
+        :WEST  => :NORTH
     }
 
     # make those attributes read only from outside world
@@ -39,7 +60,7 @@ class Robot
         @x = valid_location ? x : 0
         @y = valid_location ? y : 0
 
-        # it is a place at this coordinate
+        # it is a PLACE at this coordinate
         @path[_path_key] = 'P'
 
         # mark that this robot has been placed
@@ -76,34 +97,18 @@ class Robot
         end
     end
 
+    # Allow robot to turn left by using the mapping hash
     def left
         _ensure_placed
 
-        case @direction
-            when :NORTH
-                @direction = :WEST
-            when :SOUTH
-                @direction = :EAST
-            when :EAST
-                @direction = :NORTH
-            when :WEST
-                @direction = :SOUTH
-        end
+        @direction = MAPPING_TURN_LEFT[@direction]
     end
 
+    # Allow robot to turn right by using the mapping hash
     def right
         _ensure_placed
 
-        case @direction
-            when :NORTH
-                @direction = :EAST
-            when :SOUTH
-                @direction = :WEST
-            when :EAST
-                @direction = :SOUTH
-            when :WEST
-                @direction = :NORTH
-        end
+        @direction = MAPPING_TURN_RIGHT[@direction]
     end
 
     # Clear the path history of the robot
@@ -134,6 +139,6 @@ class Robot
         @x.to_s << "_" << @y.to_s
     end
 
-    # the private class name will start with "_" for convension
+    # the private class name will start with "_" for convention
     private :_ensure_placed, :_path_key
 end
