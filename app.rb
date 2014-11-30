@@ -40,7 +40,7 @@ c = gets
 # when it reaches the end of the file, just a safe checking.
 #
 # Also make sure that the command is always lower case
-c.chomp.downcase! unless c.nil?
+c.chomp!.downcase! unless c.nil?
 
 until c == 'quit' || c == 'exit'
     begin

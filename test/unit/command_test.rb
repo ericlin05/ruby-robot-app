@@ -13,6 +13,10 @@ class CommandTest < Test::Unit::TestCase
         assert_equal("place", command.command)
         assert_equal([3,4,"EAST"], command.params)
 
+        command = Command.new("place")
+        assert_equal("place", command.command)
+        assert_equal([0,0,"NORTH"], command.params)
+
         command = Command.new("MOVE")
         assert_equal("move", command.command)
 

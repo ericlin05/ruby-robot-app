@@ -10,12 +10,12 @@ require 'class/report/fancy_report'
 class ReportFactory
     # robot    - The Robot class instance
     # tabletop - The TableTop instance
-    # type     - Optional, either :simple or :fancy
-    def self.getReport(robot, tabletop, type=:simple)
+    # type     - Optional, either AbstractReport::REPORT_TYPE_SIMPLE or AbstractReport::REPORT_TYPE_FANCY
+    def self.getReport(robot, tabletop, type=AbstractReport::DEFAULT_TYPE)
         type = AbstractReport::DEFAULT_TYPE if AbstractReport::SUPPORTED_TYPES[type].nil?
 
         case type
-            when :fancy
+            when AbstractReport::REPORT_TYPE_FANCY
                 FancyReport.new(robot, tabletop)
             else
                 SimpleReport.new(robot, tabletop)

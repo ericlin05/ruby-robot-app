@@ -2,6 +2,8 @@ require 'class/tabletop'
 require 'class/not_ready_error'
 
 class Robot
+    DEFAULT_DIRECTION = :NORTH
+
     # the list of valid directions that the robot can face
     # make it a hash table so that it is easy for lookup
     VALID_DIRECTIONS = {
@@ -30,7 +32,7 @@ class Robot
     # y         - The Y coordinate of the initial position
     def place(table_top, direction=:NORTH, x=0, y=0)
         @table_top = table_top
-        @direction = VALID_DIRECTIONS[direction].nil? ? :NORTH : direction
+        @direction = VALID_DIRECTIONS[direction].nil? ? DEFAULT_DIRECTION : direction
 
         valid_location = x >= 0 && x <= table_top.width && y >= 0 && y <= table_top.height
 

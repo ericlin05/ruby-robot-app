@@ -31,6 +31,8 @@ class Command
         end
 
         @command = tmp[0].downcase
+        @params = []
+
         if tmp.length == 2
             params = tmp[1].split(',')
 
@@ -51,6 +53,10 @@ class Command
             params[2].upcase!
 
             @params = params
+        end
+
+        if @command == 'place' && @params.length != 3
+            @params = [ 0, 0, Robot::DEFAULT_DIRECTION.to_s ]
         end
     end
 

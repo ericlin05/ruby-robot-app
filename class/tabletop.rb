@@ -19,7 +19,4 @@ class TableTop
         @width = width
         @height = height
     end
-
-    def is_at_left_edge
-    end
 end
