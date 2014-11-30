@@ -8,17 +8,11 @@ require 'class/report/fancy_report'
 #
 # Currently supported classes are: SimpleReport and FancyReport
 class ReportFactory
-    DEFAULT_TYPE = :simple
-    SUPPORTED_TYPES = {
-        :simple => 1,
-        :fancy  => 1
-    }
-
     # robot    - The Robot class instance
     # tabletop - The TableTop instance
     # type     - Optional, either :simple or :fancy
     def self.getReport(robot, tabletop, type=:simple)
-        type = DEFAULT_TYPE if SUPPORTED_TYPES[type].nil?
+        type = AbstractReport::DEFAULT_TYPE if AbstractReport::SUPPORTED_TYPES[type].nil?
 
         case type
             when :fancy

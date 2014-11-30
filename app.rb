@@ -3,20 +3,35 @@ require 'class/robot'
 require 'class/tabletop'
 require 'class/command'
 require 'optparse'
+require 'class/report/abstract_report'
 require 'class/report/report_factory'
 
 # Getting command line parameters
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: ruby -I . app.rb [options]"
+# Setup default options
+options = {
+    :report_type  => AbstractReport::DEFAULT_TYPE,
+    :table_width  => TableTop::DEFAULT_WIDTH,
+    :table_height => TableTop::DEFAULT_HEIGHT
+}
 
-  opts.on("-r", "--report [Report Type]", "Report Type: simple or fancy") do |v|
-    options[:report_type] = v.to_sym
-  end
+OptionParser.new do |opts|
+    opts.banner = "Usage: ruby -I . app.rb [options]"
+
+    opts.on("-r", "--report [Report Type]", "Report Type: simple or fancy") do |v|
+        options[:report_type] = v.to_sym
+    end
+
+    opts.on("-w", "--width [Table Top Width]", "Table Top's width") do |v|
+        options[:table_width] = v.to_i
+    end
+
+    opts.on("-h", "--height [Table Top Height]", "Table Top's Height") do |v|
+        options[:table_height] = v.to_i
+    end
 end.parse!
 
 # initialise tabletop and robot
-tabletop = TableTop.new(5,5)
+tabletop = TableTop.new(options[:table_width], options[:table_height])
 robot = Robot.new("R2-D2")
 report = ReportFactory.getReport(robot, tabletop, options[:report_type])
 

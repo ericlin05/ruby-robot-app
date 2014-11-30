@@ -8,6 +8,9 @@
 #   1. Add obstacles on the table 
 #   2. Add holes on the table
 class TableTop
+    DEFAULT_WIDTH  = 5
+    DEFAULT_HEIGHT = 5
+
     # define the attributes that can only be read
     attr_reader :width, :height
 

@@ -13,11 +13,13 @@ class FancyReportTest < Test::Unit::TestCase
         robot.place(tabletop, :NORTH, 1, 2)
 
         expected = <<EOF
-. . . . .
-. . . . .
-. R . . .
-. . . . .
-. . . . .
+. . . . . 4
+. . . . . 3
+. R . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 1,2,NORTH
 
 EOF
@@ -25,11 +27,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. . . . .
-. R . . .
-. P . . .
-. . . . .
-. . . . .
+. . . . . 4
+. R . . . 3
+. P . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 1,3,NORTH
 
 EOF
@@ -37,11 +41,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. R . . .
-. M . . .
-. P . . .
-. . . . .
-. . . . .
+. R . . . 4
+. M . . . 3
+. P . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 1,4,NORTH
 
 EOF
@@ -49,11 +55,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. R . . .
-. M . . .
-. P . . .
-. . . . .
-. . . . .
+. R . . . 4
+. M . . . 3
+. P . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 1,4,NORTH
 
 EOF
@@ -61,11 +69,13 @@ EOF
 
         robot.right
         expected = <<EOF
-. R . . .
-. M . . .
-. P . . .
-. . . . .
-. . . . .
+. R . . . 4
+. M . . . 3
+. P . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 1,4,EAST
 
 EOF
@@ -73,11 +83,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. M R . .
-. M . . .
-. P . . .
-. . . . .
-. . . . .
+. M R . . 4
+. M . . . 3
+. P . . . 2
+. . . . . 1
+. . . . . 0
+0 1 2 3 4
+
 2,4,EAST
 
 EOF
@@ -92,11 +104,13 @@ EOF
         robot.place(tabletop, :NORTH, 0, 0)
 
         expected = <<EOF
-. . . . .
-. . . . .
-. . . . .
-. . . . .
-R . . . .
+. . . . . 4
+. . . . . 3
+. . . . . 2
+. . . . . 1
+R . . . . 0
+0 1 2 3 4
+
 0,0,NORTH
 
 EOF
@@ -104,11 +118,13 @@ EOF
 
         robot.left
         expected = <<EOF
-. . . . .
-. . . . .
-. . . . .
-. . . . .
-R . . . .
+. . . . . 4
+. . . . . 3
+. . . . . 2
+. . . . . 1
+R . . . . 0
+0 1 2 3 4
+
 0,0,WEST
 
 EOF
@@ -117,11 +133,13 @@ EOF
         # now place it again
         robot.place(tabletop, :SOUTH, 1, 2)
         expected = <<EOF
-. . . . .
-. . . . .
-. R . . .
-. . . . .
-P . . . .
+. . . . . 4
+. . . . . 3
+. R . . . 2
+. . . . . 1
+P . . . . 0
+0 1 2 3 4
+
 1,2,SOUTH
 
 EOF
@@ -129,11 +147,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. . . . .
-. . . . .
-. P . . .
-. R . . .
-P . . . .
+. . . . . 4
+. . . . . 3
+. P . . . 2
+. R . . . 1
+P . . . . 0
+0 1 2 3 4
+
 1,1,SOUTH
 
 EOF
@@ -141,11 +161,13 @@ EOF
 
         robot.move
         expected = <<EOF
-. . . . .
-. . . . .
-. P . . .
-. M . . .
-P R . . .
+. . . . . 4
+. . . . . 3
+. P . . . 2
+. M . . . 1
+P R . . . 0
+0 1 2 3 4
+
 1,0,SOUTH
 
 EOF
@@ -154,11 +176,13 @@ EOF
         # clear the path history for this robot
         robot.clear
         expected = <<EOF
-. . . . .
-. . . . .
-. . . . .
-. . . . .
-. R . . .
+. . . . . 4
+. . . . . 3
+. . . . . 2
+. . . . . 1
+. R . . . 0
+0 1 2 3 4
+
 1,0,SOUTH
 
 EOF

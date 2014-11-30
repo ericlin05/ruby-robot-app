@@ -4,11 +4,13 @@ require 'class/report/abstract_report'
 # is currently at by displaying a grid on the screen
 #
 # Example:
-# . . . . .
-# . . . . .
-# P M M . .
-# . . M R .
-# . . . . .
+# . . . . . 4
+# . . . . . 3
+# P M M . . 2
+# . . M R . 1
+# . . . . . 0
+# 0 1 2 3 4
+#
 # 3,1,EAST
 #
 # P for Place
@@ -24,16 +26,29 @@ class FancyReport < AbstractReport
         (0...@tabletop.height).reverse_each do |h|
             (0...@tabletop.width).each do |w|
                 if w == @robot.x && h == @robot.y
-                    output << "R "
+                    output << "R"
                 elsif !@robot.path[w.to_s << "_" << h.to_s].nil?
-                    output << @robot.path[w.to_s << "_" << h.to_s] << " "
+                    output << @robot.path[w.to_s << "_" << h.to_s]
                 else
-                    output << ". "
+                    output << "."
                 end
+
+                # add the number spaces after each coordinate based on the 
+                # number of digits of the table width
+                output << " " * @tabletop.width.to_s.length
             end
-            output.strip!
-            output << "\n"
+
+            # print out the Y values on the right
+            # add the left padding so that it is easier to read
+            output << h.to_s.rjust(@tabletop.height.to_s.length, '0') << "\n"
         end
+
+        # prints out the X values at the bottom
+        (0...@tabletop.width).each do |w|
+            output << w.to_s.rjust(@tabletop.width.to_s.length, '0') << " "
+        end
+        output.strip!
+        output << "\n\n"
 
         # Now display the information same as the SimpleReport
         output << @robot.x.to_s << "," << @robot.y.to_s << "," << @robot.direction.to_s << "\n\n"
