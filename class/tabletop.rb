@@ -20,8 +20,8 @@ class TableTop
         @width  = width.to_i
         @height = height.to_i
 
-        # use default value if not set properly
-        @width  = DEFAULT_WIDTH if @width == 0
-        @height = DEFAULT_WIDTH if @height == 0
+        # use default value if not set properly or TOO small
+        @width  = DEFAULT_WIDTH if @width  < DEFAULT_WIDTH
+        @height = DEFAULT_WIDTH if @height < DEFAULT_HEIGHT
     end
 end

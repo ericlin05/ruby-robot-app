@@ -11,6 +11,10 @@ b. Use "rake" to run test cases
 
     sudo gem install rake
 
+c. Need "mocha" for mocks and stubs in Ruby
+
+    sudo gem install mocha
+
 2. Running Tests:
 
 To run the test cases, simply run from app's root directory
@@ -29,7 +33,7 @@ a. Run the app from the app's root directory without any options
 
    This will start the app using default settings
 
-   i.   uses simply reporting
+   i.   uses simple reporting (without the grid output)
    ii.  width is 5 units
    iii. height is 5 units
 
@@ -42,8 +46,8 @@ c. Pass extra options to customise the app
     ruby -I . app.rb -r fancy -x 20 -y 20
 
    -r - Report type, currently supports "simple" or "fancy", default to simple if not specified
-   -x - The width of the table top, default to 5 if not specified
-   -y - The height of the table top, default to 5 if not specified
+   -x - The width of the table top, default to 5 if not specified or less than 5
+   -y - The height of the table top, default to 5 if not specified or less than 5
 
 d. I have also set up some sample test input to test this app based on PROBLEM.md file, 
    again, from the app's root directory
@@ -53,5 +57,3 @@ d. I have also set up some sample test input to test this app based on PROBLEM.m
 4. Quit the application:
 
     Simply type in "QUIT", "EXIT" commands or Ctrl + D to exit the program
-
-
