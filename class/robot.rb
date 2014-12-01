@@ -35,7 +35,7 @@ class Robot
     }
 
     # make those attributes read only from outside world
-    attr_reader :table_top, :direction, :x, :y, :placed, :path
+    attr_reader :table_top, :direction, :x, :y, :placed, :path, :name
 
     # it would be too boring if the robot does not have a name, 
     # let's give it a name when creating a robot

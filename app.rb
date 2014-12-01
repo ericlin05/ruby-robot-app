@@ -1,7 +1,7 @@
 
 require 'class/robot'
 require 'class/tabletop'
-require 'class/command'
+require 'class/command/command_factory'
 require 'optparse'
 require 'class/report/abstract_report'
 require 'class/report/report_factory'
@@ -43,9 +43,8 @@ robot = Robot.new("R2-D2")
 report = ReportFactory.getReport(robot, tabletop, options[:report_type])
 
 puts ""
-puts "Thanks for running this little robot program."
-puts ""
-puts "It supports the following commands:"
+puts "Hello, my name is #{robot.name}. Welcome to my virtual world in the command line."
+puts "You can use the following commands to navigate me on a tabletop:"
 puts ""
 puts "1. PLACE X,Y,F - placing robot on the tabletop, i.e. PLACE 5,5,NORTH"
 puts "2. PLACE       - no parameter version of the previous one and will default to '0,0,NORTH'"
@@ -61,6 +60,8 @@ puts "The initial command must be the \"PLACE\" command, and all commands will b
 puts ""
 puts "All commands are case-insensitive."
 puts ""
+puts "Have fun!"
+puts ""
 
 c = gets
 # when piping data from a text file, will get a NIL error 
@@ -71,7 +72,8 @@ c.chomp!.downcase! unless c.nil?
 
 until c == 'quit' || c == 'exit'
     begin
-        Command.new(c).run(robot, tabletop, report)
+        CommandFactory.getCommand(c, robot, tabletop, report)
+                      .run
     rescue NotReadyError => e 
         puts e.message
     rescue InvalidCommandError => e
