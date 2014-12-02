@@ -1,3 +1,8 @@
+=======
+ruby-robot-app
+==============
+
+A Ruby command line little app to show case the understanding of Ruby language
 
 This ruby app was tested under Kubuntu with Ruby version 1.9.3p484 installed.
 
@@ -57,3 +62,4 @@ d. I have also set up some sample test input to test this app based on PROBLEM.m
 4. Quit the application:
 
     Simply type in "QUIT", "EXIT" commands or Ctrl + D to exit the program
+
